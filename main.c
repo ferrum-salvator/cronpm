@@ -8,32 +8,38 @@ int *parse(char *cmd)
     int time = 0;
     char str[3];
     // Minutes
-    if (cmd[0] != '*')
+    if (strstr(cmd, "*/"))
     {
-        strncpy(str, cmd, 2);
-        str[2] = '\0';
-        time += 60 * atoi(str);
+       int e;
+       e = strchr(cmd, "/"); 
+       period_index = (int)(e - cmd);
     }
-    // Hours
-    if (cmd[3] != '*')
-    {
-        strncpy(str, cmd, 2);
-        str[2] = '\0';
-        time += 3600 * atoi(str);
-    }
-    // Days
-    if (cmd[5] != '*')
-    {
-        strncpy(str, cmd, 2);
-        str[2] = '\0';
-        time += 86400 * atoi(str);
-    }
-    if (cmd[7] != '*')
-    {
-        strncpy(str, cmd, 2);
-        str[2] = '\0';
-        time += month_len * 86400 * atoi(str);
-    }
+    /* if (cmd[0] != '*') */
+    /* { */
+    /*     strncpy(str, cmd, 2); */
+    /*     str[2] = '\0'; */
+    /*     time += 60 * atoi(str); */
+    /* } */
+    /* // Hours */
+    /* if (cmd[3] != '*') */
+    /* { */
+    /*     strncpy(str, cmd, 2); */
+    /*     str[2] = '\0'; */
+    /*     time += 3600 * atoi(str); */
+    /* } */
+    /* // Days */
+    /* if (cmd[5] != '*') */
+    /* { */
+    /*     strncpy(str, cmd, 2); */
+    /*     str[2] = '\0'; */
+    /*     time += 86400 * atoi(str); */
+    /* } */
+    /* if (cmd[7] != '*') */
+    /* { */
+    /*     strncpy(str, cmd, 2); */
+    /*     str[2] = '\0'; */
+    /*     time += month_len * 86400 * atoi(str); */
+    /* } */
     return time;
 }
 
@@ -42,7 +48,7 @@ int main(int argc, char *argv[])
     int i;
     FILE *f;
     char s[1024];
-    char commands[1024][1024];
+    char cmds[1024][1024];
 
     f = popen("/usr/bin/env crontab -l", "r");
     if (f == NULL) 
@@ -55,7 +61,7 @@ int main(int argc, char *argv[])
     {
         if ((s[0] != '#') && (!strstr(s, "MAILTO=")))
         {
-            strcpy(commands[i], s);
+            strcpy(cmds[i], s);
             i++;
         }
     }
@@ -70,7 +76,7 @@ int main(int argc, char *argv[])
     int i;
     FILE *f;
     char s[1024];
-    char commands[1024][1024];
+    char cmds[1024][1024];
 
     f = popen("/usr/bin/env crontab -l", "r");
     if (f == NULL) 
@@ -83,7 +89,7 @@ int main(int argc, char *argv[])
     {
         if ((s[0] != '#') && (!strstr(s, "MAILTO=")))
         {
-            strcpy(commands[i], s);
+            strcpy(cmds[i], s);
             i++;
         }
     }
