@@ -10,19 +10,20 @@ int parse(char *cmd)
     // Minutes
     if (strstr(cmd, "*/"))
     {
-        int period_start, period_end;
+        int period_start, period_end, j = 0;
         char *e, *t;
         e = strchr(cmd, '/'); 
         period_start = (int)(e - cmd);
         strncpy(t, cmd, period_start); 
         e = strchr(cmd, ' '); 
         period_end = (int)(e - cmd);
-        e = '\0';
+        e[0] = '\0';
         for (int i = period_start; i < period_end; i++)
         {
-            e += cmd[i];
+            e[j] = cmd[i];
+            j++;
         }
-        printf("%d", e);
+        printf("%s", e);
         /* time = atoi(e); */
     }
     /* if (cmd[0] != '*') */
