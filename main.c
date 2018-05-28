@@ -12,14 +12,12 @@ cron_task parse(char* cmd)
   cron_task c;
   // Period
   int period_start, period_end, j = 0, k = 0;
-  char* t = (char*)malloc(256*sizeof(char));
-  /* char t[256]; */
+  /* char* t = (char*)malloc(256*sizeof(char)); */
+  char *t;
   t = strchr(cmd, '/');
-  t += 1; // Two symbols
   period_start = (int)(t - cmd);
   t = strchr(cmd, ' ');
   period_end = (int)(t - cmd);
-  t -= 1;
   for (int i = period_start; i < period_end; i++) {
     t[j] = cmd[i];
     j++;
