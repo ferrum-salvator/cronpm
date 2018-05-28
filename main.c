@@ -13,13 +13,17 @@ cron_task parse(char* cmd)
   // Period
   int period_start, period_end, j = 0, k = 0;
   /* char* t = (char*)malloc(256*sizeof(char)); */
-  char *t;
+  char* t;
   t = strchr(cmd, '/');
-  period_start = (int)(t - cmd);
+  // First digit position
+  period_start = (int)(t - cmd) + 1;
   t = strchr(cmd, ' ');
-  period_end = (int)(t - cmd);
+  // Last digit position
+  period_end = (int)(t - cmd) - 1;
   for (int i = period_start; i < period_end; i++) {
     t[j] = cmd[i];
+    printf("%c", t[j]);
+    fflush(stdout);
     j++;
   }
   c.period = atoi(t);
@@ -28,7 +32,7 @@ cron_task parse(char* cmd)
   while ((cmd[j] == ' ') || (cmd[j] == '*')) {
     j++;
   }
-  for (int i = j; i < (int)(sizeof(cmd)/sizeof(char)); i++){
+  for (int i = j; i < (int)(sizeof(cmd) / sizeof(char)); i++) {
     c.script_name[k] = cmd[i];
     k++;
   }
