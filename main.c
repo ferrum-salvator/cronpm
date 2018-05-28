@@ -2,25 +2,28 @@
 #include <stdlib.h>
 #include <string.h>
 
-int parse(char *cmd)
-// Returns time interval in seconds
+int parse(char* cmd)
+  // Returns time interval in seconds
 {
   int time = 0;
   // Minutes
   if (strstr(cmd, "*/")) {
     int period_start, period_end, j = 0;
-    char *e, *t = '\0';
+    /* char *e, *t = NULL; */
+    char *e;
+    char t[256];
     e = strchr(cmd, '/');
+    e+=1; // Two symbols
     period_start = (int)(e - cmd);
-    strncpy(t, cmd, period_start);
+    /* (void)strncpy(t, cmd, period_start); */
     e = strchr(cmd, ' ');
     period_end = (int)(e - cmd);
-    e[0] = '\0';
+    e = NULL;
     for (int i = period_start; i < period_end; i++) {
-      e[j] = cmd[i];
+      t[j] = cmd[i];
       j++;
     }
-    printf("%s", e);
+    printf("%s", t);
     /* time = atoi(e); */
   }
   /* if (cmd[0] != '*') */
@@ -52,9 +55,10 @@ int parse(char *cmd)
   return time;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[])
+{
   int i;
-  FILE *f;
+  FILE* f;
   char s[1024];
   char cmds[1024][1024];
 
@@ -70,6 +74,6 @@ int main(int argc, char *argv[]) {
       i++;
     }
   }
-  parse("*/25");
+  parse("*/25 .    ");
   return 0;
 }
