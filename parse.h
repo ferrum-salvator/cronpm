@@ -13,5 +13,6 @@ typedef struct {
 } cron_task;
 
 cron_task parse(char* cmd);
+void read_crontab(char* user);
 
 #endif

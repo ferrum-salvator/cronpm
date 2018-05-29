@@ -29,3 +29,26 @@ cron_task parse(char* cmd)
   c.p.name[k] = '\0';
   return c;
 }
+
+void read_crontab(char* user)
+{
+  int i;
+  FILE* f;
+  char s[1024];
+  char exec[256];
+  cron_task cmds[64];
+  snprintf(exec, sizeof(exec),
+      "/bin/sh -c \"crontab -u %s -l\"", user);
+  f = popen(exec, "r");
+  if (f == NULL) {
+    printf("Failed\n");
+    exit(1);
+  }
+  i = 0;
+  while (fgets(s, sizeof(s), f) != NULL) {
+    if (strstr(s, "*/")) {
+      cmds[i] = parse(s);
+      i++;
+    }
+  }
+};

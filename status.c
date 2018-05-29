@@ -7,7 +7,7 @@ process* getProcesses(char n[256])
   char exec[256], t[256], s[1024];
   int i = 0, j = 0;
   snprintf(exec, sizeof(exec),
-      "/usr/bin/env sh -c \"ps -ax | egrep \"%s\"", n);
+      "/bin/sh -c \"ps -eo uname,time,pid,cmd | egrep \"%s\"", n);
   f = popen("exec", "r");
   if (f == NULL) {
     printf("Failed\n");
@@ -15,7 +15,7 @@ process* getProcesses(char n[256])
   }
   while (fgets(s, sizeof(s), f) != NULL) {
     while (s[j] != ' ') {
-      t[j] = s[j];  
+      t[j] = s[j];
       j++;
     }
     strcpy(p[i].user, t);
