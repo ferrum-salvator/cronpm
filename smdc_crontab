@@ -63,4 +63,4 @@ MAILTO=""
 ####19          * * * * /home/smdc/software/fetching/goes/getavg_new.sh
 #####*/20       * * * * /home/smdc/www/software/fluxes/wait.sh
 ###2           4  * * * /home/smdc/software/fetching/juliandate.sh
-##############electro-l2 is processed by user wera cause of VPN problems!
+#############electro-l2 is processed by user wera cause of VPN problems!

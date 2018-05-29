@@ -3,8 +3,8 @@
 #include <string.h>
 
 typedef struct {
-  char script_name[256];
   int period;
+  char script_name[];
 } cron_task;
 
 cron_task parse(char* cmd)
@@ -12,31 +12,32 @@ cron_task parse(char* cmd)
   cron_task c;
   // Period
   int period_start, period_end, j = 0, k = 0;
-  /* char *e, *t = NULL; */
-  char* e;
-  char t[256];
-  e = strchr(cmd, '/');
-  e += 1; // Two symbols
-  period_start = (int)(e - cmd);
-  /* (void)strncpy(t, cmd, period_start); */
-  e = strchr(cmd, ' ');
-  period_end = (int)(e - cmd);
+  /* char* t = (char*)malloc(256*sizeof(char)); */
+  char* t;
+  t = strchr(cmd, '/');
+  // First digit position
+  period_start = (int)(t - cmd) + 1;
+  t = strchr(cmd, ' ');
+  // Last digit position
+  period_end = (int)(t - cmd) - 1;
   for (int i = period_start; i < period_end; i++) {
     t[j] = cmd[i];
+    printf("%c", t[j]);
+    fflush(stdout);
     j++;
   }
-  printf("%s", t);
   c.period = atoi(t);
   // Script name
   j = period_end;
   while ((cmd[j] == ' ') || (cmd[j] == '*')) {
     j++;
   }
-  for (int i = j; i < (int)(sizeof(cmd)/sizeof(char)); i++){
+  for (int i = j; i < (int)(sizeof(cmd) / sizeof(char)); i++) {
     c.script_name[k] = cmd[i];
     k++;
   }
   return c;
+  free(t);
 }
 
 int main(int argc, char* argv[])
