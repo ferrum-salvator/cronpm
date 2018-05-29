@@ -18,7 +18,7 @@ process* getProcesses(char n[256])
       t[j] = s[j];  
       j++;
     }
-    p[i].user = t;
+    strcpy(p[i].user, t);
     i++;
   }
 

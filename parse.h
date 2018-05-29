@@ -8,7 +8,7 @@
 
 // Parses crontab structure FIXME
 typedef struct {
-    char script_name[256];
+    process p;
     int period;
 } cron_task;
 

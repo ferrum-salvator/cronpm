@@ -28,6 +28,6 @@ int main(int argc, char* argv[])
     }
   }
   cron_task t = parse("*/25 .  bepis  ");
-  printf("%s\n%d\n", t.script_name, t.period);
+  printf("%s\n%d\n", t.p.name, t.period);
   return 0;
 }

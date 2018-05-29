@@ -16,7 +16,6 @@ cron_task parse(char* cmd)
     e[j] = cmd[i];
     j++;
   }
-  printf("%s", e);
   c.period = atoi(e);
   // Script name
   j = period_end;
@@ -24,8 +23,9 @@ cron_task parse(char* cmd)
     j++;
   }
   for (int i = j; i < (int)(sizeof(cmd) / sizeof(char)); i++) {
-    c.script_name[k] = cmd[i];
+    c.p.name[k] = cmd[i];
     k++;
   }
+  c.p.name[k] = '\0';
   return c;
 }
