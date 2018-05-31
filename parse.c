@@ -4,7 +4,7 @@ cron_task parse(char* cmd)
 {
   cron_task c;
   // Period
-  int period_start, period_end, j = 0, k = 0;
+  int period_start, period_end, j = 0;
   char* period_pointer = strchr(cmd, '/') + 1; // next symbol after slash
   c.period = 0;                                // atoi :)))
   while ((*period_pointer != '\0') && (*period_pointer != ' ')) {
@@ -26,6 +26,7 @@ void read_crontab(char* user)
   char exec[256];
   cron_task cmds[4096]; // the situation when there are lots of processes is
   // our main goal; So let's consider, we can have 4 thousand processes!
+  // I'd prefer list,  not an array to not having to reallocate memory
   snprintf(exec, sizeof(exec),
       "/bin/sh -c \"crontab -u %s -l\"", user);
   f = popen(exec, "r");
@@ -38,6 +39,7 @@ void read_crontab(char* user)
   {
     if (strstr(s, "*/")) {
       cmds[i] = parse(s);
+      printf("%i = %s", i, s);
       i++;
     }
   }

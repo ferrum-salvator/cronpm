@@ -3,7 +3,7 @@
 process* getProcesses(char n[256])
 {
   FILE* f;
-  process* p = (process*)malloc(sizeof(process) * 64);
+  process* p = (process*)malloc(sizeof(process) * 4096);
   char exec[256], t[256], s[1024];
   int i = 0, j = 0;
   snprintf(exec, sizeof(exec),
