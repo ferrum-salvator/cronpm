@@ -6,7 +6,14 @@
 
 int main(int argc, char* argv[])
 {
-  printf("%s\n", getProcesses("aosh")[0].user);
+  char *username = (char*)malloc(5);
+  strcpy(username, "aosh");
+  if (argc > 1)
+  {
+    username = argv[1];
+  }
+  process* plist = getProcesses(username);
+  printf("%s\n", plist[0].user);
 //  printf("%s\n", parse("/*25 ls /").p.name);
   return 0;
 }
