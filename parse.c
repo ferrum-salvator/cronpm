@@ -18,29 +18,34 @@ cron_task parse(char* cmd)
   return c;
 }
 
-void read_crontab(char* user)
-{
+int read_crontab(char* user) { // returns number of processes
   int i;
   FILE* f;
   char s[1024];
   char exec[256];
-  cron_task cmds[4096]; // the situation when there are lots of processes is
-  // our main goal; So let's consider, we can have 4 thousand processes!
+  int croncount = 64;
+  cron_task* cmds = (cron_task*)malloc(croncount * sizeof(cron_task));
   // I'd prefer list,  not an array to not having to reallocate memory
-  snprintf(exec, sizeof(exec),
-      "/bin/sh -c \"crontab -u %s -l\"", user);
+  snprintf(
+    exec,
+    sizeof(exec),
+    "/bin/sh -c \"crontab -u %s -l\"",
+    user);
   f = popen(exec, "r");
   if (f == NULL) {
     printf("Failed\n");
     exit(1);
   }
   i = 0;
-  while (fgets(s, sizeof(s), f) != NULL)
-  {
+  while (fgets(s, sizeof(s), f) != NULL) {
     if (strstr(s, "*/")) {
       cmds[i] = parse(s);
       printf("%i = %s", i, s);
       i++;
+      if (i >= croncount) { // relong the array of commands
+        cmds = (cron_task*)realloc(cmds, (croncount + 64) * sizeof(cron_task));
+        croncount += 64;
+      }
     }
   }
 };

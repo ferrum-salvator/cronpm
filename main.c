@@ -12,6 +12,8 @@ int main(int argc, char* argv[])
   {
     username = argv[1];
   }
+  int croncount = read_crontab(username);
+  printf("Cron has %i tasks", croncount);
   process* plist = getProcesses(username);
   printf("%s\n", plist[0].user);
 //  printf("%s\n", parse("/*25 ls /").p.name);
