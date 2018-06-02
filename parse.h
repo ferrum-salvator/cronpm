@@ -15,12 +15,12 @@ typedef struct {
 
 typedef struct {
     int Ntask;
-    cron_task* tasklist;
+    cron_task** tasklist;
 } cron_tasks;
 
-cron_task parse(char* cmd);
-cron_tasks read_crontab(char* user);
-char *tasktext(cron_task t);
-char *crontext(cron_tasks cts);
+cron_task* parse(char* cmd);
+cron_tasks* read_crontab(char* user);
+char* tasktext(cron_task t);
+char* crontext(cron_tasks cts);
 
 #endif

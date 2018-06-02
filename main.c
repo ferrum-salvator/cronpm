@@ -12,13 +12,13 @@ int main(int argc, char* argv[])
   {
     username = argv[1];
   }
-  cron_tasks crontbl = read_crontab(username);
-  printf("Cron has %i tasks:\n", crontbl.Ntask);
-  for(int i = 0; i < crontbl.Ntask; i++) {
+  cron_tasks* crontbl = read_crontab(username);
+  printf("Cron has %i tasks:\n", crontbl->Ntask);
+  for(int i = 0; i < crontbl->Ntask; i++) {
     printf("Peiod: %i, task:%s, user:%s\n",
-        crontbl.tasklist[i].period,
-        crontbl.tasklist[i].p.name,
-        crontbl.tasklist[i].p.user
+        crontbl->tasklist[i]->period,
+        crontbl->tasklist[i]->p.name,
+        crontbl->tasklist[i]->p.user
         );
   }
   process* plist = getProcesses(username);
